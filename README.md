@@ -27,7 +27,8 @@ Currently supporting the following operations:
 
 Should print something similar to:
 
-    {"filtered_by": "permissions", "count": 1, "items": [{"article_id": 123456789, "title": "Viol\u00e3o", "master_publisher_id": 0, "defined_type": "figure", "status": "Private", "version": 1, "published_date": "09:27, Jun 03, 2015", "description": "<p>A test guitar</p>", "description_nohtml": "A test guitar", "total_size": "116.88 KB", "authors": [{"first_name": "Bruno", "last_name": "Kinoshita", "id": 99999, "full_name": "Bruno Kinoshita"}], "tags": [{"id": 123, "name": "guitar"}], "categories": [{"id": 456, "name": "Instrumentation, Techniques, and Astronomical Observations"}], "files": [{"size": "120 KB", "thumb": "http://figshare.com/read/private/543/12455.jpg", "id": 789, "mime_type": "image/jpeg", "name": "IMG-201503111.jpg"}], "links": [{"link": "http://google.com", "id": 123}, {"link": "http://github.com", "id": 456}]}]}
+    [Article [articleId=123456789, title=Violão, masterPublisherId=0, definedType=figure, status=Private, version=1, publishedDate=09:27, Jun 03, 2015, description=<p>A test guitar</p>, descriptionNohtml=A test guitar, totalSize=116.88 KB, authors=[Author [firstName=Bruno, lastName=Kinoshita, id=123, fullName=Bruno Kinoshita]], tags=[Tag [id=456, name=guitar]], files=[File [size=120 KB, thumb=http://figshare.com/read/private/23232/3232.jpg, id=567, mimeType=image/jpeg, name=IMG-87878-WA0002.jpg]], links=[Link [id=124, link=http://google.com], Link [id=5454, link=http://github.com]]]]
+
 
 ## Create an article
 
