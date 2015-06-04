@@ -23,8 +23,9 @@
  */
 
 /**
- * FigShare main classes.
- *
+ * Model classes for FigShare API version 1.0. All the classes in this package are
+ * immutable and thread-safe.
+ * 
  * @since 0.1
  */
-package org.biouno.figshare;
+package org.biouno.figshare.v1.model;

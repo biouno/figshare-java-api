@@ -21,10 +21,61 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+package org.biouno.figshare;
 
 /**
- * FigShare main classes.
+ * {@link FigShareClient} exception.
  *
  * @since 0.1
  */
-package org.biouno.figshare;
+public class FigShareClientException extends RuntimeException {
+
+	/*
+	 * Serial UID.
+	 */
+	private static final long serialVersionUID = 2894960741035518125L;
+
+	/**
+	 * Default constructor.
+	 */
+	public FigShareClientException() {
+	}
+
+	/**
+	 * Constructor.
+	 * @param message message
+	 */
+	public FigShareClientException(String message) {
+		super(message);
+	}
+
+	/**
+	 * Constructor.
+	 * @param cause cause
+	 */
+	public FigShareClientException(Throwable cause) {
+		super(cause);
+	}
+
+	/**
+	 * Constructor.
+	 * @param message message
+	 * @param cause cause
+	 */
+	public FigShareClientException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	/**
+	 * Constructor.
+	 * @param message message
+	 * @param cause cause
+	 * @param enableSuppression flag to enable suppression
+	 * @param writableStackTrace flag for writable stack trace
+	 */
+	public FigShareClientException(String message, Throwable cause,
+			boolean enableSuppression, boolean writableStackTrace) {
+		super(message, cause, enableSuppression, writableStackTrace);
+	}
+
+}
