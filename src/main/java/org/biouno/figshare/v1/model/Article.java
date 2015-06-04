@@ -39,25 +39,78 @@ import com.google.gson.annotations.SerializedName;
 public final class Article {
 
 	@SerializedName("article_id")
-	private final Long articleId;
-	private final String title;
+	private Long articleId;
+	private String title;
 	@SerializedName("master_publisher_id")
-	private final Long masterPublisherId;
+	private Long masterPublisherId;
 	@SerializedName("defined_type")
-	private final String definedType;
-	private final String status;
-	private final Long version;
+	private String definedType;
+	private String status;
+	private Long version;
 	@SerializedName("published_date")
-	private final String publishedDate;
-	private final String description;
+	private String publishedDate;
+	private String description;
 	@SerializedName("description_nohtml")
-	private final String descriptionNohtml;
+	private String descriptionNohtml;
 	@SerializedName("total_size")
-	private final String totalSize;
+	private String totalSize;
 	private final List<Author> authors;
 	private final List<Tag> tags;
+	private final List<Category> categories;
 	private final List<File> files;
 	private final List<Link> links;
+	
+	private String doi;
+	private Long downloads;
+	private final List<Owner> owners;
+	private Long shares;
+	private Long views;
+
+	/**
+	 * Article construcor.
+	 *
+	 * @param articleId ID
+	 * @param title title
+	 * @param masterPublisherId master published ID
+	 * @param definedType defined type
+	 * @param status status
+	 * @param version version
+	 * @param publishedDate published date
+	 * @param description description
+	 * @param descriptionNohtml raw description
+	 * @param totalSize total size
+	 * @param doi DOI
+	 * @param downloads number of downloads
+	 * @param shares number of shares
+	 * @param views number of views
+	 */
+	public Article(Long articleId, String title, Long masterPublisherId,
+			String definedType, String status, Long version,
+			String publishedDate, String description, String descriptionNohtml,
+			String totalSize, String doi, Long downloads, Long shares,
+			Long views) {
+		super();
+		this.articleId = articleId;
+		this.title = title;
+		this.masterPublisherId = masterPublisherId;
+		this.definedType = definedType;
+		this.status = status;
+		this.version = version;
+		this.publishedDate = publishedDate;
+		this.description = description;
+		this.descriptionNohtml = descriptionNohtml;
+		this.totalSize = totalSize;
+		this.doi = doi;
+		this.downloads = downloads;
+		this.shares = shares;
+		this.views = views;
+		authors = new LinkedList<>();
+		tags = new LinkedList<>();
+		categories = new LinkedList<>();
+		files = new LinkedList<>();
+		links = new LinkedList<>();
+		owners = new LinkedList<>();
+	}
 
 	/**
 	 * Constructor.
@@ -77,21 +130,32 @@ public final class Article {
 			String definedType, String status, Long version,
 			String publishedDate, String description, String descriptionNohtml,
 			String totalSize) {
-		super();
-		this.articleId = articleId;
-		this.title = title;
-		this.masterPublisherId = masterPublisherId;
-		this.definedType = definedType;
-		this.status = status;
-		this.version = version;
-		this.publishedDate = publishedDate;
-		this.description = description;
-		this.descriptionNohtml = descriptionNohtml;
-		this.totalSize = totalSize;
-		authors = new LinkedList<>();
-		tags = new LinkedList<>();
-		files = new LinkedList<>();
-		links = new LinkedList<>();
+		this(articleId, title, masterPublisherId, definedType, status, version,
+				publishedDate, description, descriptionNohtml, totalSize,
+				null, Long.valueOf(0L), Long.valueOf(0L), Long.valueOf(0L));
+	}
+
+	/**
+	 * Constructor.
+	 *
+	 * @param articleId article ID
+	 * @param title title
+	 * @param masterPublisherId master publisher ID
+	 * @param definedType defined type
+	 * @param status status
+	 * @param version version
+	 * @param publishedDate published date
+	 * @param description description
+	 * @param descriptionNohtml raw description
+	 * @param totalSize total size (999.99 KB)
+	 */
+	public Article(Long articleId, String title, String definedType,
+			String status, Long version, String publishedDate, String description,
+			String descriptionNohtml, String doi, Long downloads, Long shares,
+			String totalSize, Long views) {
+		this(articleId, title, null, definedType, status, version,
+				publishedDate, description, descriptionNohtml, totalSize,
+				doi, downloads, shares, views);
 	}
 
 	/**
@@ -179,6 +243,13 @@ public final class Article {
 	}
 
 	/**
+	 * @return the categories
+	 */
+	public List<Category> getCategories() {
+		return Collections.unmodifiableList(categories);
+	}
+
+	/**
 	 * @return the files
 	 */
 	public List<File> getFiles() {
@@ -192,6 +263,41 @@ public final class Article {
 		return Collections.unmodifiableList(links);
 	}
 
+	/**
+	 * @return the owners
+	 */
+	public List<Owner> getOwners() {
+		return owners;
+	}
+
+	/**
+	 * @return the doi
+	 */
+	public String getDoi() {
+		return doi;
+	}
+
+	/**
+	 * @return the downloads
+	 */
+	public Long getDownloads() {
+		return downloads;
+	}
+
+	/**
+	 * @return the shares
+	 */
+	public Long getShares() {
+		return shares;
+	}
+
+	/**
+	 * @return the views
+	 */
+	public Long getViews() {
+		return views;
+	}
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -203,6 +309,8 @@ public final class Article {
 				+ ((articleId == null) ? 0 : articleId.hashCode());
 		result = prime * result + ((authors == null) ? 0 : authors.hashCode());
 		result = prime * result
+				+ ((categories == null) ? 0 : categories.hashCode());
+		result = prime * result
 				+ ((definedType == null) ? 0 : definedType.hashCode());
 		result = prime * result
 				+ ((description == null) ? 0 : description.hashCode());
@@ -210,20 +318,26 @@ public final class Article {
 				* result
 				+ ((descriptionNohtml == null) ? 0 : descriptionNohtml
 						.hashCode());
+		result = prime * result + ((doi == null) ? 0 : doi.hashCode());
+		result = prime * result
+				+ ((downloads == null) ? 0 : downloads.hashCode());
 		result = prime * result + ((files == null) ? 0 : files.hashCode());
 		result = prime * result + ((links == null) ? 0 : links.hashCode());
 		result = prime
 				* result
 				+ ((masterPublisherId == null) ? 0 : masterPublisherId
 						.hashCode());
+		result = prime * result + ((owners == null) ? 0 : owners.hashCode());
 		result = prime * result
 				+ ((publishedDate == null) ? 0 : publishedDate.hashCode());
+		result = prime * result + ((shares == null) ? 0 : shares.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + ((tags == null) ? 0 : tags.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		result = prime * result
 				+ ((totalSize == null) ? 0 : totalSize.hashCode());
 		result = prime * result + ((version == null) ? 0 : version.hashCode());
+		result = prime * result + ((views == null) ? 0 : views.hashCode());
 		return result;
 	}
 
@@ -249,6 +363,11 @@ public final class Article {
 				return false;
 		} else if (!authors.equals(other.authors))
 			return false;
+		if (categories == null) {
+			if (other.categories != null)
+				return false;
+		} else if (!categories.equals(other.categories))
+			return false;
 		if (definedType == null) {
 			if (other.definedType != null)
 				return false;
@@ -263,6 +382,16 @@ public final class Article {
 			if (other.descriptionNohtml != null)
 				return false;
 		} else if (!descriptionNohtml.equals(other.descriptionNohtml))
+			return false;
+		if (doi == null) {
+			if (other.doi != null)
+				return false;
+		} else if (!doi.equals(other.doi))
+			return false;
+		if (downloads == null) {
+			if (other.downloads != null)
+				return false;
+		} else if (!downloads.equals(other.downloads))
 			return false;
 		if (files == null) {
 			if (other.files != null)
@@ -279,10 +408,20 @@ public final class Article {
 				return false;
 		} else if (!masterPublisherId.equals(other.masterPublisherId))
 			return false;
+		if (owners == null) {
+			if (other.owners != null)
+				return false;
+		} else if (!owners.equals(other.owners))
+			return false;
 		if (publishedDate == null) {
 			if (other.publishedDate != null)
 				return false;
 		} else if (!publishedDate.equals(other.publishedDate))
+			return false;
+		if (shares == null) {
+			if (other.shares != null)
+				return false;
+		} else if (!shares.equals(other.shares))
 			return false;
 		if (status == null) {
 			if (other.status != null)
@@ -309,6 +448,11 @@ public final class Article {
 				return false;
 		} else if (!version.equals(other.version))
 			return false;
+		if (views == null) {
+			if (other.views != null)
+				return false;
+		} else if (!views.equals(other.views))
+			return false;
 		return true;
 	}
 
@@ -323,8 +467,10 @@ public final class Article {
 				+ ", publishedDate=" + publishedDate + ", description="
 				+ description + ", descriptionNohtml=" + descriptionNohtml
 				+ ", totalSize=" + totalSize + ", authors=" + authors
-				+ ", tags=" + tags + ", files=" + files + ", links=" + links
-				+ "]";
+				+ ", tags=" + tags + ", categories=" + categories + ", files="
+				+ files + ", links=" + links + ", doi=" + doi + ", downloads="
+				+ downloads + ", owners=" + owners + ", shares=" + shares
+				+ ", views=" + views + "]";
 	}
-	
+
 }

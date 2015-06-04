@@ -39,6 +39,8 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.biouno.figshare.v1.model.Article;
@@ -59,17 +61,28 @@ import com.google.gson.JsonParser;
  */
 public final class FigShareClient {
 
+	private static final String JSON_CONTENT_TYPE = "application/json";
 	// constants
 	private static final String VERSION_PREFIX = "v";
 	private static final String FORWARD_SLASH = "/";
 
 	// parameters
+	/**
+	 * API endpoint (e.g. http://api.figshare.com/)
+	 */
 	private final String endpoint;
+	/**
+	 * API version (e.g. 1)
+	 */
 	private final int version;
+	/**
+	 * OAuth consumer, used to sign requests to the API.
+	 */
 	private final OAuthConsumer consumer;
 
 	/**
 	 * Internal constructor.
+	 *
 	 * @param endpoint URL to the service
 	 * @param version API version
 	 * @param clientKey consumer key
@@ -102,6 +115,8 @@ public final class FigShareClient {
 	}
 
 	/**
+	 * Create the FigShare API URL using the endpoint, version and API method.
+	 *
 	 * @param endpoint endpoint URL
 	 * @param version API version
 	 * @param method API operation
@@ -117,6 +132,17 @@ public final class FigShareClient {
 		return sb.toString();
 	}
 
+	/**
+	 * Create a FigShareClient to interface to the FigShare API.
+	 *
+	 * @param endpoint API endpoint
+	 * @param version API version
+	 * @param clientKey OAuth client key
+	 * @param clientSecret OAuth client secret
+	 * @param tokenKey OAuth token key
+	 * @param tokenSecret OAuth token secret
+	 * @return a {@link FigShareClient}
+	 */
 	public static FigShareClient to(String endpoint, int version, String clientKey, String clientSecret,
 			String tokenKey, String tokenSecret) {
 		return new FigShareClient(endpoint, version, clientKey, clientSecret, tokenKey, tokenSecret);
@@ -138,15 +164,15 @@ public final class FigShareClient {
 			final String url = getURL(endpoint, version, method);
 			// create an HTTP request to a protected resource
 	        final HttpGet request = new HttpGet(url);
-			
+
 			// sign the request
 	        consumer.sign(request);
-	        
+
 	        // send the request
 	        httpClient = HttpClientBuilder.create().build();
 	        HttpResponse response = httpClient.execute(request);
-	        HttpEntity entity = response.getEntity();
-	        String json = EntityUtils.toString(entity);
+	        HttpEntity responseEntity = response.getEntity();
+	        String json = EntityUtils.toString(responseEntity);
 	        List<Article> articles = readArticlesFromJson(json);
 	        return Collections.unmodifiableList(articles);
 		} catch (OAuthCommunicationException e) {
@@ -163,9 +189,10 @@ public final class FigShareClient {
 	}
 
 	/**
-	 * Gets the 
-	 * @param json
-	 * @return
+	 * Get the articles objects from JSON.
+	 *
+	 * @param json JSON
+	 * @return articles objects
 	 */
 	protected List<Article> readArticlesFromJson(String json) {
 		Gson gson = new Gson();
@@ -179,6 +206,67 @@ public final class FigShareClient {
         	articles.add(article);
         }
         return articles;
+	}
+
+	/**
+	 * Create an article.
+	 *
+	 * @param title title
+	 * @param description description 
+	 * @param definedType defined type (e.g. dataset)
+	 * @return an {@link Article}
+	 */
+	public Article createArticle(final String title, final String description, final String definedType) {
+		HttpClient httpClient = null;
+		try {
+			final String method = "my_data/articles";
+			// create an HTTP request to a protected resource
+			final String url = getURL(endpoint, version, method);
+			// create an HTTP request to a protected resource
+	        final HttpPost request = new HttpPost(url);
+	        Gson gson = new Gson();
+	        JsonObject payload = new JsonObject();
+	        payload.addProperty("title", title);
+	        payload.addProperty("description", description);
+	        payload.addProperty("defined_type", definedType);
+	        String jsonRequest = gson.toJson(payload);
+	        StringEntity entity = new StringEntity(jsonRequest);
+	        entity.setContentType(JSON_CONTENT_TYPE);
+			request.setEntity(entity);
+
+			// sign the request
+	        consumer.sign(request);
+
+	        // send the request
+	        httpClient = HttpClientBuilder.create().build();
+	        HttpResponse response = httpClient.execute(request);
+	        HttpEntity responseEntity = response.getEntity();
+	        String json = EntityUtils.toString(responseEntity);
+	        Article article = readArticleFromJson(json);
+	        return article;
+		} catch (OAuthCommunicationException e) {
+			throw new FigShareClientException("Failed to get articles: " + e.getMessage(), e);
+		} catch (OAuthMessageSignerException e) {
+			throw new FigShareClientException("Failed to get articles: " + e.getMessage(), e);
+		} catch (OAuthExpectationFailedException e) {
+			throw new FigShareClientException("Failed to get articles: " + e.getMessage(), e);
+		} catch (ClientProtocolException e) {
+			throw new FigShareClientException("Failed to get articles: " + e.getMessage(), e);
+		} catch (IOException e) {
+			throw new FigShareClientException("Failed to get articles: " + e.getMessage(), e);
+		}
+	}
+
+	/**
+	 * Get the article object from JSON.
+	 *
+	 * @param json JSON
+	 * @return article object
+	 */
+	protected Article readArticleFromJson(String json) {
+		Gson gson = new Gson();
+        Article article = gson.fromJson(json, Article.class);
+        return article;
 	}
 
 }
