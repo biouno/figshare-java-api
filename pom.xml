@@ -3,7 +3,7 @@
 
     <groupId>org.biouno</groupId>
     <artifactId>figshare-java-api</artifactId>
-    <version>0.1</version>
+    <version>0.2-SNAPSHOT</version>
 
     <name>FigShare Java API</name>
     <description>A Java API to interface with the FigShare API</description>
