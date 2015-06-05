@@ -34,147 +34,147 @@ import com.google.gson.annotations.SerializedName;
  */
 public final class File {
 
-	/**
-	 * Size (999 KB).
-	 */
-	private final String size;
+    /**
+     * Size (999 KB).
+     */
+    private final String size;
 
-	/**
-	 * Thumbnail URL.
-	 */
-	private final String thumb;
+    /**
+     * Thumbnail URL.
+     */
+    private final String thumb;
 
-	/**
-	 * ID.
-	 */
-	private final Long id;
+    /**
+     * ID.
+     */
+    private final Long id;
 
-	/**
-	 * Mime/type.
-	 */
-	@SerializedName("mime_type")
-	private final String mimeType;
+    /**
+     * Mime/type.
+     */
+    @SerializedName("mime_type")
+    private final String mimeType;
 
-	/**
-	 * File name with extension.
-	 */
-	private final String name;
+    /**
+     * File name with extension.
+     */
+    private final String name;
 
-	/**
-	 * Constructor.
-	 * @param size size
-	 * @param thumb thumbnail URL
-	 * @param id ID
-	 * @param mimeType mime/type
-	 * @param name file name with extension
-	 */
-	public File(String size, String thumb, Long id, String mimeType, String name) {
-		super();
-		this.size = size;
-		this.thumb = thumb;
-		this.id = id;
-		this.mimeType = mimeType;
-		this.name = name;
-	}
+    /**
+     * Constructor.
+     * @param size size
+     * @param thumb thumbnail URL
+     * @param id ID
+     * @param mimeType mime/type
+     * @param name file name with extension
+     */
+    public File(String size, String thumb, Long id, String mimeType, String name) {
+        super();
+        this.size = size;
+        this.thumb = thumb;
+        this.id = id;
+        this.mimeType = mimeType;
+        this.name = name;
+    }
 
-	/**
-	 * @return the size
-	 */
-	public String getSize() {
-		return size;
-	}
+    /**
+     * @return the size
+     */
+    public String getSize() {
+        return size;
+    }
 
-	/**
-	 * @return the thumb
-	 */
-	public String getThumb() {
-		return thumb;
-	}
+    /**
+     * @return the thumb
+     */
+    public String getThumb() {
+        return thumb;
+    }
 
-	/**
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
 
-	/**
-	 * @return the mimeType
-	 */
-	public String getMimeType() {
-		return mimeType;
-	}
+    /**
+     * @return the mimeType
+     */
+    public String getMimeType() {
+        return mimeType;
+    }
 
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result
-				+ ((mimeType == null) ? 0 : mimeType.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((size == null) ? 0 : size.hashCode());
-		result = prime * result + ((thumb == null) ? 0 : thumb.hashCode());
-		return result;
-	}
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result
+                + ((mimeType == null) ? 0 : mimeType.hashCode());
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + ((size == null) ? 0 : size.hashCode());
+        result = prime * result + ((thumb == null) ? 0 : thumb.hashCode());
+        return result;
+    }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		File other = (File) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (mimeType == null) {
-			if (other.mimeType != null)
-				return false;
-		} else if (!mimeType.equals(other.mimeType))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (size == null) {
-			if (other.size != null)
-				return false;
-		} else if (!size.equals(other.size))
-			return false;
-		if (thumb == null) {
-			if (other.thumb != null)
-				return false;
-		} else if (!thumb.equals(other.thumb))
-			return false;
-		return true;
-	}
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        File other = (File) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        if (mimeType == null) {
+            if (other.mimeType != null)
+                return false;
+        } else if (!mimeType.equals(other.mimeType))
+            return false;
+        if (name == null) {
+            if (other.name != null)
+                return false;
+        } else if (!name.equals(other.name))
+            return false;
+        if (size == null) {
+            if (other.size != null)
+                return false;
+        } else if (!size.equals(other.size))
+            return false;
+        if (thumb == null) {
+            if (other.thumb != null)
+                return false;
+        } else if (!thumb.equals(other.thumb))
+            return false;
+        return true;
+    }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "File [size=" + size + ", thumb=" + thumb + ", id=" + id
-				+ ", mimeType=" + mimeType + ", name=" + name + "]";
-	}
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "File [size=" + size + ", thumb=" + thumb + ", id=" + id
+                + ", mimeType=" + mimeType + ", name=" + name + "]";
+    }
 
 }

@@ -30,52 +30,52 @@ package org.biouno.figshare;
  */
 public class FigShareClientException extends RuntimeException {
 
-	/*
-	 * Serial UID.
-	 */
-	private static final long serialVersionUID = 2894960741035518125L;
+    /*
+     * Serial UID.
+     */
+    private static final long serialVersionUID = 2894960741035518125L;
 
-	/**
-	 * Default constructor.
-	 */
-	public FigShareClientException() {
-	}
+    /**
+     * Default constructor.
+     */
+    public FigShareClientException() {
+    }
 
-	/**
-	 * Constructor.
-	 * @param message message
-	 */
-	public FigShareClientException(String message) {
-		super(message);
-	}
+    /**
+     * Constructor.
+     * @param message message
+     */
+    public FigShareClientException(String message) {
+        super(message);
+    }
 
-	/**
-	 * Constructor.
-	 * @param cause cause
-	 */
-	public FigShareClientException(Throwable cause) {
-		super(cause);
-	}
+    /**
+     * Constructor.
+     * @param cause cause
+     */
+    public FigShareClientException(Throwable cause) {
+        super(cause);
+    }
 
-	/**
-	 * Constructor.
-	 * @param message message
-	 * @param cause cause
-	 */
-	public FigShareClientException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    /**
+     * Constructor.
+     * @param message message
+     * @param cause cause
+     */
+    public FigShareClientException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	/**
-	 * Constructor.
-	 * @param message message
-	 * @param cause cause
-	 * @param enableSuppression flag to enable suppression
-	 * @param writableStackTrace flag for writable stack trace
-	 */
-	public FigShareClientException(String message, Throwable cause,
-			boolean enableSuppression, boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
-	}
+    /**
+     * Constructor.
+     * @param message message
+     * @param cause cause
+     * @param enableSuppression flag to enable suppression
+     * @param writableStackTrace flag for writable stack trace
+     */
+    public FigShareClientException(String message, Throwable cause,
+            boolean enableSuppression, boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace);
+    }
 
 }

@@ -32,84 +32,84 @@ package org.biouno.figshare.v1.model;
  */
 public final class Link {
 
-	/**
-	 * ID.
-	 */
-	private final Long id;
+    /**
+     * ID.
+     */
+    private final Long id;
 
-	/**
-	 * Link.
-	 */
-	private final String link;
+    /**
+     * Link.
+     */
+    private final String link;
 
-	/**
-	 * Constructor.
-	 * @param id ID
-	 * @param link link
-	 */
-	public Link(Long id, String link) {
-		super();
-		this.id = id;
-		this.link = link;
-	}
+    /**
+     * Constructor.
+     * @param id ID
+     * @param link link
+     */
+    public Link(Long id, String link) {
+        super();
+        this.id = id;
+        this.link = link;
+    }
 
-	/**
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
 
-	/**
-	 * @return the link
-	 */
-	public String getLink() {
-		return link;
-	}
+    /**
+     * @return the link
+     */
+    public String getLink() {
+        return link;
+    }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((link == null) ? 0 : link.hashCode());
-		return result;
-	}
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((link == null) ? 0 : link.hashCode());
+        return result;
+    }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Link other = (Link) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (link == null) {
-			if (other.link != null)
-				return false;
-		} else if (!link.equals(other.link))
-			return false;
-		return true;
-	}
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Link other = (Link) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        if (link == null) {
+            if (other.link != null)
+                return false;
+        } else if (!link.equals(other.link))
+            return false;
+        return true;
+    }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "Link [id=" + id + ", link=" + link + "]";
-	}
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "Link [id=" + id + ", link=" + link + "]";
+    }
 
 }
