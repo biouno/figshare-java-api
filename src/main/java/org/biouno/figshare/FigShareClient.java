@@ -23,6 +23,7 @@
  */
 package org.biouno.figshare;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -40,7 +41,13 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.FormBodyPart;
+import org.apache.http.entity.mime.FormBodyPartBuilder;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.ContentBody;
+import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.biouno.figshare.v1.model.Article;
@@ -267,6 +274,65 @@ public final class FigShareClient {
 		Gson gson = new Gson();
         Article article = gson.fromJson(json, Article.class);
         return article;
+	}
+
+	/**
+	 * Upload a file to an article.
+	 *
+	 * @param articleId article ID
+	 * @param file java.io.File file
+	 * @return org.biouno.figshare.v1.model.File uploaded file, without the thumbnail URL
+	 */
+	public org.biouno.figshare.v1.model.File uploadFile(long articleId, File file) {
+		HttpClient httpClient = null;
+		try {
+			final String method = String.format("my_data/articles/%d/files", articleId);
+			// create an HTTP request to a protected resource
+			final String url = getURL(endpoint, version, method);
+			// create an HTTP request to a protected resource
+			final HttpPut request = new HttpPut(url);
+
+			MultipartEntityBuilder builder  = MultipartEntityBuilder.create();
+        	ContentBody body = new FileBody(file);
+        	FormBodyPart part = FormBodyPartBuilder.create("filedata", body).build();
+        	builder.addPart(part);
+
+	        HttpEntity entity = builder.build();
+			request.setEntity(entity);
+
+			// sign the request
+	        consumer.sign(request);
+
+	        // send the request
+	        httpClient = HttpClientBuilder.create().build();
+	        HttpResponse response = httpClient.execute(request);
+	        HttpEntity responseEntity = response.getEntity();
+	        String json = EntityUtils.toString(responseEntity);
+	        org.biouno.figshare.v1.model.File uploadedFile = readFileFromJson(json);
+	        return uploadedFile;
+		} catch (OAuthCommunicationException e) {
+			throw new FigShareClientException("Failed to get articles: " + e.getMessage(), e);
+		} catch (OAuthMessageSignerException e) {
+			throw new FigShareClientException("Failed to get articles: " + e.getMessage(), e);
+		} catch (OAuthExpectationFailedException e) {
+			throw new FigShareClientException("Failed to get articles: " + e.getMessage(), e);
+		} catch (ClientProtocolException e) {
+			throw new FigShareClientException("Failed to get articles: " + e.getMessage(), e);
+		} catch (IOException e) {
+			throw new FigShareClientException("Failed to get articles: " + e.getMessage(), e);
+		}
+	}
+
+	/**
+	 * Get a file from a JSON.
+	 *
+	 * @param json JSON
+	 * @return a file
+	 */
+	protected org.biouno.figshare.v1.model.File readFileFromJson(String json) {
+		Gson gson = new Gson();
+		org.biouno.figshare.v1.model.File file = gson.fromJson(json, org.biouno.figshare.v1.model.File.class);
+        return file;
 	}
 
 }

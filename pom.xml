@@ -41,6 +41,11 @@
 			<artifactId>httpcore</artifactId>
 			<version>${httpclient.version}</version>
 		</dependency>
+		<dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpmime</artifactId>
+            <version>${httpclient.version}</version>
+        </dependency>
 		<!-- GSON for JSON -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
@@ -48,17 +53,17 @@
 			<version>2.3.1</version>
 			<scope>compile</scope>
 		</dependency>
+		<!-- Commons IO -->
+		<dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.3</version>
+        </dependency>
 		<!-- testing -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>2.3</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

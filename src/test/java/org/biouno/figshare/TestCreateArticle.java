@@ -3,7 +3,6 @@ package org.biouno.figshare;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
-import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.biouno.figshare.v1.model.Article;
@@ -11,32 +10,32 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for retrieving articles.
+ * Tests for creating an article.
  *
  * @since 0.1
  */
-public class TestGetArticles {
+public class TestCreateArticle {
 
 	private String json;
 	
 	@Before
 	public void setUp() throws Exception {
-		String jsonFileLocation = getClass().getResource("/articles.json").getFile();
+		String jsonFileLocation = getClass().getResource("/article.json").getFile();
 		json = FileUtils.readFileToString(new File(jsonFileLocation));
 	}
 	
 	@Test
 	public void testJsonToObjects() {
-		List<Article> articles = FigShareClient.to(
+		Article article = FigShareClient.to(
 				"", 
 				1, 
 				"", 
 				"", 
 				"", 
 				"")
-			.readArticlesFromJson(json)
+			.readArticleFromJson(json)
 		;
-		assertEquals("Article ID doesn't match", Long.valueOf(123456789), articles.get(0).getArticleId());
+		assertEquals("Wrong article ID", Long.valueOf(123L), article.getArticleId());
 	}
 	
 }
